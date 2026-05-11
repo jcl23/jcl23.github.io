@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Justin Lee</title>
+  <style>
+    @font-face {
+      font-family: 'W95FA';
+      src: url('src/assets/fonts/W95FA.otf') format('opentype');
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    /* Container — grey background */
+    .container {
+      background-color: hsl(0deg 0% 75.29%);
+      height: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 20px;
+    }
+
+    /* Outer box — silver, W95 font */
+    .outer {
+      font-family: 'W95FA', sans-serif;
+      background: hsl(0deg 0% 75.29%);
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(180, 180, 180);
+      width: 720px;
+      position: relative;
+    }
+
+    /* Header strip */
+    .header {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      height: 45px;
+    }
+
+    .header > div {
+      flex: 1;
+      height: 45px;
+    }
+
+    /* Win95 buttons */
+    button {
+      width: 100%;
+      height: 100%;
+      font-family: 'W95FA', sans-serif;
+      border-width: 2px;
+      border-style: outset;
+      border-color: buttonface;
+      border-right-color: #424242;
+      border-bottom-color: #424242;
+      background-color: silver;
+      color: black;
+      padding: 0 0 4px;
+      border-radius: 1px;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    button:hover {
+      border: 2px inset #fff;
+      background: silver;
+      color: #424242;
+      box-shadow: -1px -1px #000;
+    }
+
+    button:active {
+      border: 2px inset #fff;
+      color: #424242;
+      box-shadow: -1px -1px #000;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Layout border — the main content area */
+    .layout-border {
+      width: 720px;
+      height: 576px;
+      border: 1px solid black;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* All positioned child panels */
+    .layout-border > div {
+      position: absolute;
+      overflow: hidden;
+      border-color: blue;
+      border-width: 2px;
+      border-style: solid;
+    }
+
+    /* Name — top strip */
+    .name-panel {
+      left: 10%;
+      top: 10%;
+      width: 80%;
+      height: 20%;
+      background-color: transparent;
+      border: none !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .name-text {
+      filter: blur(0.4px);
+      letter-spacing: 0.05em;
+      font-family: 'W95FA', sans-serif;
+      font-size: 2.4em;
+      font-weight: normal;
+      color: black;
+    }
+
+    /* Project cards — 3 columns spanning 30%–80% vertically */
+    .proj {
+      top: 32%;
+      height: 58%;
+      width: 27%;
+      font-family: 'W95FA', sans-serif;
+      filter: blur(0.2px);
+      background: silver;
+      color: #212529;
+      cursor: pointer;
+    }
+
+    .proj:hover {
+      background: #d4d0c8;
+      box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
+    }
+
+    .proj1 { left: 8%; }
+    .proj2 { left: 36%; }
+    .proj3 { left: 64%; }
+
+    /* Win95-style card interior */
+    .proj-banner {
+      margin: 2px;
+      height: 26px;
+      filter: blur(0.2px);
+      background: linear-gradient(to right, #08216b, #a5cef7);
+      color: #fff;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 3px 4px 1px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .proj img {
+      image-rendering: pixelated;
+      width: calc(100% - 8px);
+      max-width: 98px;
+      display: block;
+      margin: 6px auto;
+      border-top: 2px solid #424242;
+      border-left: 2px solid #424242;
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
+    }
+
+    .proj-desc {
+      font-size: 18px;
+      text-align: center;
+      padding: 4px 6px 0;
+      line-height: 1.4;
+      color: #212529;
+    }
+
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      padding: 6px 5px 4px;
+      justify-content: center;
+    }
+
+    .tag {
+      font-family: 'W95FA', sans-serif;
+      font-size: 15px;
+      background: #c0c0c0;
+      color: #000;
+      padding: 1px 4px 2px;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-bottom: 1px solid #424242;
+      border-right: 1px solid #424242;
+    }
+
+    /* Under-construction notice */
+    .under-construction {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: hsl(0deg 0% 75.29%);
+      border-top: 1px solid #424242;
+      font-size: 11px;
+      color: #555;
+      padding: 2px 6px;
+      text-align: left;
+      font-family: 'W95FA', sans-serif;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      font-family: 'W95FA', sans-serif;
+      background: #c0c0c0;
+      border: 2px solid;
+      border-color: #dfdfdf #424242 #424242 #dfdfdf;
+      box-shadow: 1px 1px 0 #fff, -1px -1px 0 #808080;
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-title {
+      background: linear-gradient(to right, #000080, #1084d7);
+      color: #fff;
+      padding: 4px 4px 4px 6px;
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title button {
+      width: 16px;
+      height: 14px;
+      padding: 0;
+      font-size: 10px;
+      border: 1px solid;
+      border-color: #dfdfdf #424242 #424242 #dfdfdf;
+    }
+
+    .modal-body {
+      padding: 12px;
+      overflow-y: auto;
+      flex: 1;
+      font-size: 21px;
+      line-height: 1.6;
+      color: #000;
+    }
+
+    .modal-body p {
+      margin: 0 0 12px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="outer">
+
+      <!-- Header buttons -->
+      <div class="header">
+        <div><button onclick="document.getElementById('aboutModal').classList.add('active')">About</button></div>
+        <div>
+          <a href="https://www.linkedin.com/in/justin-lee-2aa469212/" target="_blank">
+            <button>LinkedIn</button>
+          </a>
+        </div>
+        <div>
+          <a href="Justin_Lee_Resume_May_2026%20Final.pdf" target="_blank">
+            <button>Resume</button>
+          </a>
+        </div>
+        <div>
+          <a href="mailto:justin.lee91375@gmail.com">
+            <button>Email</button>
+          </a>
+        </div>
+        <div>
+          <a href="https://github.com/jcl23" target="_blank">
+            <button>GitHub</button>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main layout area -->
+      <div class="layout-border">
+
+        <!-- Name -->
+        <div class="name-panel">
+          <span class="name-text">Justin&nbsp;Lee</span>
+        </div>
+
+        <!-- Project 1 -->
+        <div class="proj proj1" onclick="window.open('https://justinl.me/rotate3')">
+          <div class="proj-banner">Symmetry Group Demo</div>
+          <img src="src/assets/images/rotate_98.png" alt="Symmetry Group Demo" />
+          <div class="proj-desc">Explore and visualize the symmetry groups of 3D objects interactively.</div>
+          <div class="proj-tags">
+            <span class="tag">TypeScript</span>
+            <span class="tag">React</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">Spring.js</span>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="proj proj2" onclick="window.open('https://justinl.me/homology')">
+          <div class="proj-banner">Homology Calculator</div>
+          <img src="src/assets/images/homology_98.png" alt="Homology Calculator Demo" />
+          <div class="proj-desc">Compute homology groups of simplicial complexes step by step.</div>
+          <div class="proj-tags">
+            <span class="tag">TypeScript</span>
+            <span class="tag">React</span>
+            <span class="tag">Three.js</span>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="proj proj3" onclick="window.open('https://github.com/jcl23/tactics/')">
+          <div class="proj-banner">Tactics Coordinator</div>
+          <img src="src/assets/images/w98map.png" alt="Tactics Coordinator" />
+          <div class="proj-desc">Coordinate team strategy with live map and callout overlays.</div>
+          <div class="proj-tags">
+            <span class="tag">TypeScript</span>
+            <span class="tag">React</span>
+            <span class="tag">WebSocket</span>
+            <span class="tag">DynamoDB</span>
+            <span class="tag">Lambda</span>
+            <span class="tag">OpenAI API</span>
+          </div>
+        </div>
+
+
+        <div class="under-construction">Site under construction</div>
+      </div>
+
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-title">
+          About
+          <button onclick="document.getElementById('aboutModal').classList.remove('active')">×</button>
+        </div>
+        <div class="modal-body">
+          <p>Hi, I'm Justin Lee, an SF-based software engineer and hobbyist mathematician.</p>
+          <p>I'm passionate about building interactive tools that make complex mathematical concepts immediate and intuitive. I like working all across mathematics, computer science, and their applications.</p>
+          <p><strong>Interests:</strong> Group theory, topological data analysis, type theory, categorical logic, and real-time systems.</p>
+          <p><strong>Languages:</strong> TypeScript, Python, React, Three.js, and more.</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Close modal when clicking outside of it
+      document.getElementById('aboutModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('active');
+        }
+      });
+    </script>
+  </div>
+</body>
+</html>
